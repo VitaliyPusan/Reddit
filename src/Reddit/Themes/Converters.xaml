@@ -1,0 +1,14 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:converters="using:Reddit.Utilities.Converters"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <converters:BooleanToVisibilityInvertedConverter x:Key="BooleanToVisibilityInvertedConverter" />
+    <converters:StringFormatConverter x:Key="StringFormatConverter" />
+    <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
+    <converters:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter" />
+    <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+    <converters:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
+    <converters:EntryDateConverter x:Key="EntryDateConverter" />
+    <converters:ThumbnailConverter x:Key="ThumbnailConverter" />
+</ResourceDictionary>
