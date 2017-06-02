@@ -31,7 +31,7 @@ namespace Reddit.Utilities
 
             var items = await _loader(count);
             result.Count = (uint) items.Count;
-
+            
             foreach (var item in items)
             {
                 Add(item);

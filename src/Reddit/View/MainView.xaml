@@ -65,7 +65,8 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <ListView ItemsSource="{x:Bind ViewModel.ItemSource, Mode=OneWay}"
+        <ListView x:Name="ListView"
+                  ItemsSource="{x:Bind ViewModel.ItemSource, Mode=OneWay}"
                   ItemContainerStyle="{StaticResource RedditItemStyle}"
                   ItemTemplate="{StaticResource RedditItemTemplate}"
                   IsItemClickEnabled="True" ItemClick="OnItemClick" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,9 +20,30 @@ namespace Reddit
 
             ConfigureContainer();
             ConfigureViewModelLocator();
+
+            UnhandledException += CurrentOnUnhandledException;
+            TaskScheduler.UnobservedTaskException += OnTaskSchedulerUnobservedException;
         }
 
         public static IUnityContainer Container { get; } = new UnityContainer();
+        public static ILogger Logger => Container.Resolve<ILogger>();
+
+        private void CurrentOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            HandleException(e.Exception);
+        }
+
+        private void OnTaskSchedulerUnobservedException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            e.SetObserved();
+            HandleException(e.Exception);
+        }
+
+        public static void HandleException(Exception exception)
+        {
+            Logger.Log(exception.ToString());
+        }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
@@ -43,6 +65,7 @@ namespace Reddit
 
         private static void ConfigureContainer()
         {
+            Container.RegisterType<ILogger, Logger>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IRedditService, RedditService>(new ContainerControlledLifetimeManager());
         }
 

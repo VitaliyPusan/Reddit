@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -13,15 +11,26 @@ namespace Reddit.Service
     {
         private readonly string _channelUrl = "https://www.reddit.com/top";
         private readonly HttpClient _client = new HttpClient();
+        private readonly ILogger _logger;
         private readonly int _pageLimit = 10;
+
+        public RedditService(ILogger logger)
+        {
+            _logger = logger;
+        }
 
         public async Task<List<RedditItem>> GetPage(string afterId = null)
         {
+            return await GetPage(_pageLimit, afterId);
+        }
+
+        public async Task<List<RedditItem>> GetPage(int count, string afterId = null)
+        {
             var result = new List<RedditItem>();
 
-            Debug.WriteLine($"------Reading new 10 elements [{afterId}]------");
+            _logger.Log($"------Reading new 10 elements [{afterId}]------");
 
-            var url = $"{_channelUrl}/.json?limit={_pageLimit}&after={afterId}";
+            var url = $"{_channelUrl}/.json?limit={count}&after={afterId}";
 
             var response = await _client.GetAsync(url);
 
@@ -49,9 +58,9 @@ namespace Reddit.Service
                     result.Add(item);
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                Debug.WriteLine("Error parsing page...");
+                _logger.Log("Error parsing page...");
             }
 
             return result;

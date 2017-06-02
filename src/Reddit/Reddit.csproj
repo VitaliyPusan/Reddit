@@ -95,6 +95,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\MainViewModelState.cs" />
+    <Compile Include="Service\Contracts\ILogger.cs" />
+    <Compile Include="Service\Logger.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibilityInvertedConverter.cs" />
     <Compile Include="Utilities\Converters\ThumbnailConverter.cs" />
